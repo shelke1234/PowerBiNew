@@ -66,34 +66,3 @@ stages:
                 filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
                 arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
 
-### RELEASE - TEST ###
-- stage: TEST
-  variables:
-    - group: PowerBI-Test  # Variable Group used for PowerBI Deployments
-  jobs:
-    - deployment: DeployWeb
-      displayName: deploy Web App
-      pool:
-        vmImage: 'vs2017-win2016'
-      environment: 'TEST'
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: DownloadPipelineArtifact@2
-              displayName: 'Download artefacts'
-              inputs:
-                artifact: 'PowerBI'
-                path: $(Build.SourcesDirectory)\bin
-
-            - task: PowerShell@2
-              displayName: 'Deploy Shared Dataset'
-              inputs:
-                filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-SharedDataSet.ps1'
-                arguments: '-PowerBIFilePath "$(System.DefaultWorkingDirectory)\bin\$(SharedDataset.Folder)\$(SharedDataset.Name).pbix" -WorkspaceName "$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
-            - task: PowerShell@2
-              displayName: 'Deploy Reports'
-              inputs:
-                filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
-                arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
-
