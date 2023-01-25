@@ -42,7 +42,7 @@ stages:
       displayName: deploy Web App
       pool:
         vmImage: 'vs2017-win2016'
-      environment: 'DEV'
+      #environment: 'DEV'
       strategy:
         runOnce:
           deploy:
@@ -75,7 +75,7 @@ stages:
       displayName: deploy Web App
       pool:
         vmImage: 'vs2017-win2016'
-      environment: 'TEST'
+      #environment: 'TEST'
       strategy:
         runOnce:
           deploy:
