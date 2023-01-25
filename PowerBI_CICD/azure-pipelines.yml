@@ -36,7 +36,7 @@ stages:
 ### RELEASE - DEV ###
 - stage: DEV
   variables:
-    #- group: PowerBI-Dev  # Variable Group used for PowerBI Deployments
+    - group: PowerBI-Dev  # Variable Group used for PowerBI Deployments
   jobs:
     - deployment: DeployWeb
       displayName: deploy Web App
