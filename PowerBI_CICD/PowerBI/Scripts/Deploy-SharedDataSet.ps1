@@ -1,11 +1,11 @@
 ﻿param(
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-	[string] $PowerBIFilePath = "C:\src\PowerBI_CICD\PowerBI\SharedDataset\SharedDataSet.pbix",
+	[string] $PowerBIFilePath = "./PowerBiNew/PowerBI_CICD/PowerBI/SharedDataset/SharedDataSet.pbix",
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-	[string] $WorkspaceName = "PowerBI_CICD_Dev",
+	[string] $WorkspaceName = "My-Space",
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
@@ -13,11 +13,11 @@
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string] $BuildAgentLogin = "",
+    [string] $BuildAgentLogin = "dhananjay@cloudaeon.net",
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [String] $BuildAgentPassword = "",
+    [String] $BuildAgentPassword = "LIfe@@787898",
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
