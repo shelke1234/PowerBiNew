@@ -34,7 +34,7 @@ stages:
     steps:
     - task: DownloadPipelineArtifact@2
       inputs:
-        artifact: 'PowerBI'
+      artifact: 'PowerBI'
         path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
     - task: PowerShell@2
       inputs:
