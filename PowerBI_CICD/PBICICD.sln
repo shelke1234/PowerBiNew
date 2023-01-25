@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerBI", "PowerBI", "{7487958F-4F34-41CA-A1AB-164960752DA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedDataset", "SharedDataset", "{EFB3F7A6-A27F-4959-92E4-CBA4D2BDD402}"
+	ProjectSection(SolutionItems) = preProject
+		PowerBI\SharedDataset\SharedDataset.pbix = PowerBI\SharedDataset\SharedDataset.pbix
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Report", "Report", "{2F1767AC-7C94-4799-9C7D-049BC9D874BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{CC01357F-9D64-406B-AC13-B7EB3597FA7C}"
+	ProjectSection(SolutionItems) = preProject
+		PowerBI\Scripts\Deploy-PowerBIReports.ps1 = PowerBI\Scripts\Deploy-PowerBIReports.ps1
+		PowerBI\Scripts\Deploy-SharedDataSet.ps1 = PowerBI\Scripts\Deploy-SharedDataSet.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerBI_CICD", "PowerBI_CICD", "{259D9E25-153A-4A87-A5F1-61DF7B4A1D7B}"
+	ProjectSection(SolutionItems) = preProject
+		PowerBI\Report\PowerBI_CICD\Report1.pbix = PowerBI\Report\PowerBI_CICD\Report1.pbix
+		PowerBI\Report\PowerBI_CICD\Report2.pbix = PowerBI\Report\PowerBI_CICD\Report2.pbix
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{793BA16B-9598-4753-BEB5-A0F4FC67BC0B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EFB3F7A6-A27F-4959-92E4-CBA4D2BDD402} = {7487958F-4F34-41CA-A1AB-164960752DA2}
+		{2F1767AC-7C94-4799-9C7D-049BC9D874BE} = {7487958F-4F34-41CA-A1AB-164960752DA2}
+		{CC01357F-9D64-406B-AC13-B7EB3597FA7C} = {7487958F-4F34-41CA-A1AB-164960752DA2}
+		{259D9E25-153A-4A87-A5F1-61DF7B4A1D7B} = {2F1767AC-7C94-4799-9C7D-049BC9D874BE}
+		{095E9066-BCD6-4AD6-9BB2-8B032C1E8CFB} = {793BA16B-9598-4753-BEB5-A0F4FC67BC0B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1C63B15-A426-4429-87E9-F8B631E19104}
+	EndGlobalSection
+EndGlobal

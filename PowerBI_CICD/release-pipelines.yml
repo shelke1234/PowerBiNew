@@ -1,0 +1,61 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+stages:
+- stage: DEV
+  variables:
+    - group: PowerBI-Dev  # Variable Group used for PowerBI Deployments
+  jobs:
+  - job: DeployPowerBIReportsJob
+    steps:
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download artefacts'
+        inputs:
+          artifact: 'PowerBI'
+          path: $(Build.SourcesDirectory)/bin
+
+      - task: PowerShell@2
+        displayName: 'Deploy Shared Dataset'
+        inputs:
+            filePath: '**/Deploy-SharedDataset.ps1'
+            arguments: '-PowerBIFilePath "$(System.DefaultWorkingDirectory)/_PowerBI-CI/PowerBI/$(SharedDataset.Folder)/$(SharedDataset.Name).pbix" -WorkspaceName "$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
+
+      - task: PowerShell@2
+        displayName: 'Deploy Reports'
+        inputs:
+            filePath: '**/Deploy-PowerBIReports.ps1'
+            arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)/_PowerBI-CI/PowerBI/Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
+
+- stage: Test
+  variables:
+    - group: PowerBI-Test  # Variable Group used for PowerBI Deployments
+  jobs:
+  - job: DeployPowerBIReportsJob
+    steps:
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download artefacts'
+        inputs:
+          artifact: 'PowerBI'
+          path: $(Build.SourcesDirectory)/bin
+
+      - task: PowerShell@2
+        displayName: 'Deploy Shared Dataset'
+        inputs:
+            filePath: '**/Deploy-SharedDataset.ps1'
+            arguments: '-PowerBIFilePath "$(System.DefaultWorkingDirectory)/_PowerBI-CI/PowerBI/$(SharedDataset.Folder)/$(SharedDataset.Name).pbix" -WorkspaceName "$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
+
+      - task: PowerShell@2
+        displayName: 'Deploy Reports'
+        inputs:
+            filePath: '**/Deploy-PowerBIReports.ps1'
+            arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)/_PowerBI-CI/PowerBI/Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
+
+
