@@ -1,7 +1,7 @@
-﻿param(
+param(
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-	[string] $PowerBIDirectory = "C:\PowerBI_CICD\PowerBI\Report\PowerBI_CICD",
+	[string] $PowerBIDirectory = "./PowerBiNew/tree/Master/PowerBI_CICD/PowerBI/Report/PowerBI_CICD",
 
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
@@ -18,6 +18,8 @@
     #[Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [string] $BuildAgentPassword = "LIfe@@787898",
+    
+
 
     #[Parameter(Mandatory = $True)]
 	[ValidateNotNullOrEmpty()]
@@ -35,6 +37,7 @@
 cls;
 
 Write-Host "### Script Started.";
+Write-Host "Now logged in as $BuildAgentLogin"
 
 try
 {
@@ -47,10 +50,17 @@ try
 			-Scope CurrentUser;
 
 		install-module `
-			-Name "MicrosoftPowerBIMgmt" `
+			-Name "MicrosoftPowerBIMgmt.Profile" `
 			-AllowClobber `
 			-Force `
 			-Scope CurrentUser;
+        install-module `
+			-Name "MicrosoftPowerBIMgmt.Workspaces" `
+			-AllowClobber `
+			-Force `
+			-Scope CurrentUser;
+ 
+
 	}
 
     $secureBuildAgentPassword = ConvertTo-SecureString $BuildAgentPassword `
@@ -74,7 +84,7 @@ try
 
         ## GET WORKSPACE ID
         Write-Host "Getting workspaces."
-
+        Write-Host $reportWorkspace.Id
         $reportWorkspace = Get-PowerBIWorkspace -Name $report.Workspace;
 
         if($reportWorkspace -eq $null)
