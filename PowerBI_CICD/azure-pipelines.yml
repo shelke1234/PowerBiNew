@@ -35,14 +35,14 @@ stages:
 
 ### RELEASE - DEV ###
 - stage: DEV
-  #variables:
+  variables:
     #- group: PowerBI-Dev  # Variable Group used for PowerBI Deployments
   jobs:
-    #- deployment: DeployWeb
+    - deployment: DeployWeb
       displayName: deploy Web App
       pool:
         vmImage: 'vs2017-win2016'
-     # environment: 'DEV'
+    dependsOn: environment: 'DEV'
       strategy:
         runOnce:
           deploy:
