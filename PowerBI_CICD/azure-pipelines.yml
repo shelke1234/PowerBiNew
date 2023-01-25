@@ -27,26 +27,20 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/PowerBI'
         ArtifactName: 'PowerBI'
         publishLocation: 'Container
-
+stages:
 - stage: Deploy
   jobs:
-  - displayName: PowerBIDEV
-    environment: DEV
-    strategy:
-    runOnce:
-      deploy:
-        steps:
-         - task: DownloadPipelineArtifact@2
-            displayName: 'Download artefacts'
-            inputs:
-              artifact: 'PowerBI'
-              path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
-
-        - task: PowerShell@2
-           displayName: 'Deploy Reports'
-           inputs:
-             filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
-             arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
+   job: "Deploy"
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: 'PowerBI'
+        path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
+    - task: PowerShell@2
+      inputs:
+        displayName: 'Deploy Reports'  
+        filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
+        arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
 
 
 
