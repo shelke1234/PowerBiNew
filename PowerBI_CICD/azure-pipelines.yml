@@ -1,46 +1,142 @@
-## Adds CICD Trigger via Pull Request
-pr:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - PowerBI/*
-
-pool:
-  vmImage: 'vs2017-win2016'
-
-## BUILD ###
-stages:
-- stage: BUILD
-  jobs:
-  - job: "Build"
-    steps:
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(Build.SourcesDirectory)/PowerBI/'
-        Contents: '**'
-        TargetFolder: '$(build.artifactstagingdirectory)/PowerBI'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/PowerBI'
-        ArtifactName: 'PowerBI'
-        publishLocation: 'Container
-stages:
-- stage: Deploy
-  jobs:
-   job: "Deploy"
-    steps:
-    - task: DownloadPipelineArtifact@2
-      inputs:
-      artifact: 'PowerBI'
-        path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
-    - task: PowerShell@2
-      inputs:
-        displayName: 'Deploy Reports'  
-        filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
-        arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
-
-
-
+All collection items must start at the same column (2:1)
+   1 | ## Adds CICD Trigger via Pull Request
+>  2 | pr:
+     | ^^^
+>  3 |   branches:
+     | ^^^^^^^^^^^
+>  4 |     include:
+     | ^^^^^^^^^^^
+>  5 |     - master
+     | ^^^^^^^^^^^
+>  6 |   paths:
+     | ^^^^^^^^^^^
+>  7 |     include:
+     | ^^^^^^^^^^^
+>  8 |     - PowerBI/*
+     | ^^^^^^^^^^^
+>  9 |
+     | ^^^^^^^^^^^
+> 10 | pool:
+     | ^^^^^^^^^^^
+> 11 |   vmImage: 'vs2017-win2016'
+     | ^^^^^^^^^^^
+> 12 |
+     | ^^^^^^^^^^^
+> 13 | ## BUILD ###
+     | ^^^^^^^^^^^
+> 14 | stages:
+     | ^^^^^^^^^^^
+> 15 | - stage: BUILD
+     | ^^^^^^^^^^^
+> 16 |   jobs:
+     | ^^^^^^^^^^^
+> 17 |   - job: "Build"
+     | ^^^^^^^^^^^
+> 18 |     steps:
+     | ^^^^^^^^^^^
+> 19 |     - task: CopyFiles@2
+     | ^^^^^^^^^^^
+> 20 |       inputs:
+     | ^^^^^^^^^^^
+> 21 |         SourceFolder: '$(Build.SourcesDirectory)/PowerBI/'
+     | ^^^^^^^^^^^
+> 22 |         Contents: '**'
+     | ^^^^^^^^^^^
+> 23 |         TargetFolder: '$(build.artifactstagingdirectory)/PowerBI'
+     | ^^^^^^^^^^^
+> 24 |
+     | ^^^^^^^^^^^
+> 25 |     - task: PublishBuildArtifacts@1
+     | ^^^^^^^^^^^
+> 26 |       inputs:
+     | ^^^^^^^^^^^
+> 27 |         PathtoPublish: '$(Build.ArtifactStagingDirectory)/PowerBI'
+     | ^^^^^^^^^^^
+> 28 |         ArtifactName: 'PowerBI'
+     | ^^^^^^^^^^^
+> 29 |         publishLocation: 'Container
+     | ^^^^^^^^^^^
+> 30 | stages:
+     | ^^^^^^^^^^^
+> 31 | - stage: Deploy
+     | ^^^^^^^^^^^
+> 32 |   deploy:  
+     | ^^^^^^^^^^^
+> 33 |    steps:
+     | ^^^^^^^^^^^
+> 34 |     - task: DownloadPipelineArtifact@2
+     | ^^^^^^^^^^^
+> 35 |       inputs:
+     | ^^^^^^^^^^^
+> 36 |       artifact: 'PowerBI'
+     | ^^^^^^^^^^^
+> 37 |         path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'All collection items must start at the same column (27:9)
+     | ^^^^^^^^^^^
+> 38 |   25 |     - task: PublishBuildArtifacts@1
+     | ^^^^^^^^^^^
+> 39 |   26 |       inputs:
+     | ^^^^^^^^^^^
+> 40 | > 27 |         PathtoPublish: '$(Build.ArtifactStagingDirectory)/PowerBI'
+     | ^^^^^^^^^^^
+> 41 |      |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 42 | > 28 |         ArtifactName: 'PowerBI'
+     | ^^^^^^^^^^^
+> 43 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 44 | > 29 |         publishLocation: 'Container
+     | ^^^^^^^^^^^
+> 45 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 46 | > 30 | stages:
+     | ^^^^^^^^^^^
+> 47 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 48 | > 31 | - stage: Deploy
+     | ^^^^^^^^^^^
+> 49 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 50 | > 32 |   deploy:  
+     | ^^^^^^^^^^^
+> 51 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 52 | > 33 |    steps:
+     | ^^^^^^^^^^^
+> 53 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 54 | > 34 |     - task: DownloadPipelineArtifact@2
+     | ^^^^^^^^^^^
+> 55 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 56 | > 35 |       inputs:
+     | ^^^^^^^^^^^
+> 57 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 58 | > 36 |       artifact: 'PowerBI'
+     | ^^^^^^^^^^^
+> 59 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 60 | > 37 |         path: $(Build.SourcesDirectory)\bin"$(SharedDataSet.Workspace.Name)" -SharedDatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -SourceSqlServer "$(SqlServer.Name)" -SourceDatabase "$(SqlServer.Database.Name)" -GatewayName "$(Gateway.Name)" -InstallLibraries "True"'
+     | ^^^^^^^^^^^
+> 61 |      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     | ^^^^^^^^^^^
+> 62 | > 38 |     - task: PowerShell@2
+     | ^^^^^^^^^^^
+> 63 |      | ^
+     | ^^^^^^^^^^^
+> 64 |   39 |       inputs:
+     | ^^^^^^^^^^^
+> 65 |   40 |         displayName: 'Deploy Reports'  
+     | ^^^^^^^^^^^
+> 66 |   41 |         filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
+     | ^^^^^^^^^^^
+> 67 |     - task: PowerShell@2
+     | ^^^^^^^^^^^
+> 68 |       inputs:
+     | ^^^^^^^^^^^
+> 69 |         displayName: 'Deploy Reports'  
+     | ^^^^^^^^^^^
+> 70 |         filePath: '$(System.DefaultWorkingDirectory)\bin\Scripts\Deploy-PowerBIReports.ps1'
+     | ^^^^^^^^^^^
+> 71 |         arguments: '-PowerBIDirectory "$(System.DefaultWorkingDirectory)\bin\Report" -DatasetWorkspaceName "$(SharedDataSet.Workspace.Name)" -DatasetName "$(SharedDataset.Name)" -BuildAgentLogin "$(BuildAgent.Name)" -BuildAgentPassword "$(BuildAgent.Password)" -ReportsToDeploy ''$(Reports.ConfigurationJson)'''
+     | ^^^^^^^^^^^
